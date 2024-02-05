@@ -14,7 +14,7 @@ This project is written in c++. It includes a server that has the ability to acc
 
 ### Dowload 
 ``` bash
-git clone https://github.com/DenysBzenko/Introduction-to-client-server-programming-using-TCP.git
+https://github.com/DenysBzenko/Multiple-clients-support-introducing-programming-threads.git
 ```
 -And just compile the code
 
