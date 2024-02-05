@@ -1,30 +1,23 @@
 #include <iostream>
-#include <WinSock2.h>
-#include <fstream>
-#include <sstream>
 #include <string>
 #include <filesystem>
 #include <chrono>
+#include <sstream>
 #include <thread>
-#include <ws2tcpip.h>
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#include <fstream>
 #include <WinSock2.h>
+#include <ws2tcpip.h>
 #pragma comment(lib, "ws2_32.lib")
 
 
-
 class FileHandler {
+private:
+    std::string directory;
+
 public:
-    static void handleGet(SOCKET clientSocket, const std::string& filename) {
-        
-    }
+    FileHandler(const std::string& dir) : directory(dir) {}
 
-    static void handlePut(SOCKET clientSocket, const std::string& filename) {
-        
-    }
-
-    static void handleList(SOCKET clientSocket) {
-        std::string directory = "D:\\KSE\\paradigm\\Introduction to client-server programming using TCP\\Introduction-to-client-server-programming-using-TCP\\server\\Server\\serverfolder";
+    void handleList(SOCKET clientSocket) {
         std::ostringstream oss;
 
         if (!std::filesystem::exists(directory)) {
@@ -42,11 +35,11 @@ public:
         }
 
         std::string fileList = oss.str();
-        send(clientSocket, fileList.c_str(), fileList.size(), 0);   
+        send(clientSocket, fileList.c_str(), fileList.size(), 0);
     }
 
-    static void handleDelete(SOCKET clientSocket, const std::string& filename) {
-        std::string fullPath = "D:\\KSE\\paradigm\\Introduction to client-server programming using TCP\\Introduction-to-client-server-programming-using-TCP\\server\\Server\\serverfolder\\" + filename;
+    void handleDelete(SOCKET clientSocket, const std::string& filename) {
+        std::string fullPath = directory + "\\" + filename;
         std::string response;
         if (std::filesystem::remove(fullPath)) {
             response = "File deleted successfully";
@@ -57,8 +50,8 @@ public:
         send(clientSocket, response.c_str(), response.size(), 0);
     }
 
-    static void handleInfo(SOCKET clientSocket, const std::string& filename) {
-        std::string fullPath = "D:\\KSE\\paradigm\\Introduction to client-server programming using TCP\\Introduction-to-client-server-programming-using-TCP\\server\\Server\\serverfolder\\" + filename;
+    void handleInfo(SOCKET clientSocket, const std::string& filename) {
+        std::string fullPath = directory + "\\" + filename;
         std::ostringstream oss;
         if (std::filesystem::exists(fullPath)) {
             auto ftime = std::filesystem::last_write_time(fullPath);
@@ -81,15 +74,12 @@ public:
     }
 };
 
-
-
-
-
 class Server {
 private:
     SOCKET serverSocket;
     sockaddr_in serverAddr;
     std::vector<std::thread> clientThreads;
+    FileHandler filehandler;
 
     void logConnection(const sockaddr_in& clientAddr) {
         char clientIP[INET_ADDRSTRLEN];
@@ -98,7 +88,6 @@ private:
         oss << "Client connected: " << clientIP << ":" << ntohs(clientAddr.sin_port);
         std::cout << oss.str() << std::endl;
     }
-
 
     void handleClient(SOCKET clientSocket, sockaddr_in clientAddr) {
         logConnection(clientAddr);
@@ -117,20 +106,14 @@ private:
             std::string command, filename;
             iss >> command >> filename;
 
-            if (command == "GET") {
-                FileHandler::handleGet(clientSocket, filename);
-            }
-            else if (command == "PUT") {
-                FileHandler::handlePut(clientSocket, filename);
-            }
-            else if (command == "LIST") {
-                FileHandler::handleList(clientSocket);
+             if (command == "LIST") {
+                filehandler.handleList(clientSocket);
             }
             else if (command == "DELETE") {
-                FileHandler::handleDelete(clientSocket, filename);
+                filehandler.handleDelete(clientSocket, filename);
             }
             else if (command == "INFO") {
-                FileHandler::handleInfo(clientSocket, filename);
+                filehandler.handleInfo(clientSocket, filename);
             }
             else {
                 std::string errorMsg = "Invalid command";
@@ -141,9 +124,8 @@ private:
         closesocket(clientSocket);
     }
 
-
 public:
-    Server() : serverSocket(INVALID_SOCKET) {
+    Server(const std::string& directoryPath) : serverSocket(INVALID_SOCKET), filehandler(directoryPath) {
         WSADATA wsaData;
         int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
         if (result != 0) {
@@ -207,7 +189,9 @@ public:
 };
 
 int main() {
-    Server server;
+    std::string directoryPath = "D:\\KSE\\paradigm\\Introduction to client-server programming using TCP\\Introduction-to-client-server-programming-using-TCP\\server\\Server\\serverfolder";
+
+    Server server(directoryPath);
     if (server.startServer(12345)) {
         server.run();
     }
