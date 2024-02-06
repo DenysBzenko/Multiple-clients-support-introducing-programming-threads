@@ -24,11 +24,11 @@ The server automatically starts listening for incoming connections on the port s
 
 ### Clients
 
-After starting the client, you can enter the following COMMANDS: For example:
+After starting the client, you can enter the following COMMANDS:
 - LIST to get a list of files.
 - DELETE <filename>  to delete a file.
 - INFO <filename> to get information about the file.
-EXAMPLE:
+ For example:
 -LIST 
 -DELETE TEST.txt
 -INFO TEST.txt
