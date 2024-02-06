@@ -20,7 +20,7 @@ https://github.com/DenysBzenko/Multiple-clients-support-introducing-programming-
 
 ### Server
 
-The server automatically starts listening for incoming connections on the port specified in the code ( 12345).
+The server automatically starts listening for incoming connections on the port specified in the code (12345).
 
 ### Clients
 
@@ -28,3 +28,20 @@ After starting the client, you can enter the following COMMANDS: For example:
 - LIST to get a list of files.
 - DELETE <filename>  to delete a file.
 - INFO <filename> to get information about the file.
+
+## LIST
+
+The server can accept the LIST command.
+IE:CLIET>>LIST
+After the server receives a request for the LIST command, it processes the request and calls the 'handleList' function. 
+SERVER>> The names of all the files that this directory contains.
+The server can send 4096 bytes
+
+## DELETE 
+The server can accept the DELETE <FILENAME> command.
+The client must write the delete command and the file name with the correct extension. After that, the server calls the 'handleDelete' function and starts looping through the file name. And deletes this folder from the directory. After successful deletion, the client will receive the command 'File deleted successfully', if not, 'Error deleting file'. 
+
+## INFO
+
+This command must be entered correctly with INFO <FILENAME>, with the correct file extension. After that, the 'handleinfo' function is called and searches for this file in the directory.
+This command helps you find out the main current information about the file (SIZE, LAST MODIFICATION, NAME). We have a basic size in c++ to read the time when it was last modified [26]. If this file does not exist, the server will respond with 'File not found'.
