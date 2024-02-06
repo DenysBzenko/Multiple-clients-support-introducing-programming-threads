@@ -28,9 +28,13 @@ After starting the client, you can enter the following COMMANDS:
 - LIST to get a list of files.
 - DELETE <filename>  to delete a file.
 - INFO <filename> to get information about the file.
- For example:
--LIST 
+
+For example:
+
+-LIST
+
 -DELETE TEST.txt
+
 -INFO TEST.txt
 
 ## LIST
