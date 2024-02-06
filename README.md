@@ -31,11 +31,11 @@ After starting the client, you can enter the following COMMANDS:
 
 For example:
 
--LIST
+- LIST
 
--DELETE TEST.txt
+- DELETE TEST.txt
 
--INFO TEST.txt
+- INFO TEST.txt
 
 ## LIST
 
