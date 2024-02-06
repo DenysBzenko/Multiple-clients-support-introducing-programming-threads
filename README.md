@@ -28,11 +28,15 @@ After starting the client, you can enter the following COMMANDS: For example:
 - LIST to get a list of files.
 - DELETE <filename>  to delete a file.
 - INFO <filename> to get information about the file.
+EXAMPLE:
+-LIST 
+-DELETE TEST.txt
+-INFO TEST.txt
 
 ## LIST
 
 The server can accept the LIST command.
-IE:CLIET>>LIST
+IE:CLIENT>>LIST 
 After the server receives a request for the LIST command, it processes the request and calls the 'handleList' function. 
 SERVER>> The names of all the files that this directory contains.
 The server can send 4096 bytes
