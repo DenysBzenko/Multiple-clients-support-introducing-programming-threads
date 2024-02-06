@@ -52,9 +52,22 @@ Client can recv a C string the maximum capicity of 4096 bytes.
 
 ## DELETE 
 The server can accept the DELETE <FILENAME> command.
-The client must write the delete command and the file name with the correct extension. After that, the server calls the 'handleDelete' function and starts looping through the file name. And deletes this folder from the directory. After successful deletion, the client will receive the command 'File deleted successfully', if not, 'Error deleting file'. 
+- Client>> DELETE <FILENAME> (EXAMPLE: Test.txt)
+  
+The client must write the delete command and the file name with the correct extension. After that, the server calls the 'handleDelete' function. Then, the server deletes this file from directory, if the file is found. After successful deletion, the client will receive the following command
+- SERVER>>'File deleted successfully'
+* OR 
+- SERVER>> 'Error deleting file'. 
 
 ## INFO
 
-This command must be entered correctly with INFO <FILENAME>, with the correct file extension. After that, the 'handleinfo' function is called and searches for this file in the directory.
-This command helps you find out the main current information about the file (SIZE, LAST MODIFICATION, NAME). We have a basic size in c++ to read the time when it was last modified [26]. If this file does not exist, the server will respond with 'File not found'.
+This command must be entered correctly with INFO <FILENAME>, with the correct file extension.
+- CLIENT>> INFO Milk.txt
+  
+After that, the 'handleinfo' function is called and searches for this file in the directory.This command helps you find out the main current information about the file (SIZE, LAST MODIFICATION, NAME). We have a basic size in c++ to read the time when it was last modified [26] bytes.
+
+- SERVER>> File: Milk.txt
+Size: 16 bytes
+Last modified: Mon Jan 22 09:38:33 202
+
+
