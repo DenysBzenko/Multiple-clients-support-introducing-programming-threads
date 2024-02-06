@@ -40,10 +40,15 @@ For example:
 ## LIST
 
 The server can accept the LIST command.
-IE:CLIENT>>LIST 
-After the server receives a request for the LIST command, it processes the request and calls the 'handleList' function. 
-SERVER>> The names of all the files that this directory contains.
-The server can send 4096 bytes
+- CLIENT>>LIST
+  
+After the server receives a request for the LIST command, it processes the request and calls the 'handleList' function. Server sends the client a C string with the names of all the files located in the directory. The server can send a C string the maximum capacity of 4096 bytes.
+
+- SERVER>> The names of all the files that this directory contains.(EXAMPLE: TEST.txt Fish.txt Milk.txt)
+
+Client can recv a C string the maximum capicity of 4096 bytes. 
+  
+
 
 ## DELETE 
 The server can accept the DELETE <FILENAME> command.
