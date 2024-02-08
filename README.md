@@ -70,4 +70,10 @@ After that, the 'handleinfo' function is called and searches for this file in th
 Size: 16 bytes
 Last modified: Mon Jan 22 09:38:33 202
 
+## sequence diagram
+![image](https://github.com/DenysBzenko/Multiple-clients-support-introducing-programming-threads/assets/119534908/ce0044e7-6fea-4f57-a2ff-64a1cc03d578)
+
+## use case diagram 
+![image](https://github.com/DenysBzenko/Multiple-clients-support-introducing-programming-threads/assets/119534908/92751688-3473-4ee7-a9bc-f3b9a5353922)
+
 
