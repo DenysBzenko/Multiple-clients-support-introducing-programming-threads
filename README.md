@@ -36,6 +36,16 @@ For example:
 - DELETE TEST.txt
 
 - INFO TEST.txt
+## DATA 
+- Data format: Data is sent and received in the form of C-strings.
+- Number of bytes:
+- Sending: The maximum request size from the client is limited to 4096 bytes.
+- Receiving: The maximum size of the response from the server is also limited to 4096 bytes.
+- Data to be transferred:
+- LIST: The client sends a "LIST" request, the server responds with a list of files.
+- DELETE <FILENAME>: The client sends the "DELETE" command with the file name, the server confirms the deletion or reports an error.
+- INFO <FILENAME>: The client requests information about the file, the server provides details such as file size and last modified time.
+
 
 ## LIST
 
