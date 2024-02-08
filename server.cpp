@@ -5,6 +5,7 @@
 #include <sstream>
 #include <thread>
 #include <fstream>
+#include <mutex>
 #include <WinSock2.h>
 #include <ws2tcpip.h>
 #pragma comment(lib, "ws2_32.lib")
@@ -80,8 +81,10 @@ private:
     sockaddr_in serverAddr;
     std::vector<std::thread> clientThreads;
     FileHandler filehandler;
+    std::mutex m;
 
     void logConnection(const sockaddr_in& clientAddr) {
+        std::lock_guard<std::mutex> guard(m);
         char clientIP[INET_ADDRSTRLEN];
         inet_ntop(AF_INET, &(clientAddr.sin_addr), clientIP, INET_ADDRSTRLEN);
         std::ostringstream oss;
